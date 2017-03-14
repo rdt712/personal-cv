@@ -1,42 +1,51 @@
 var gulp = require('gulp');
+var nodemon = require('gulp-nodemon');
 var browserSync = require('browser-sync').create();
-var source = require('vinyl-source-stream');
+var BROWSER_SYNC_RELOAD_DELAY = 500;
 
-// process CSS files and return the stream.
-gulp.task('css', function() {
-    return gulp.src('css/*.css')
-        .pipe(gulp.dest('dist/css'));
+gulp.task('default', ['browser-sync'], function () {
+    gulp.watch('js/*.js', ['js', browserSync.reload]);
+    gulp.watch('css/*.css', ['css']);
+    gulp.watch('index.html', ['bs-reload']);
 });
 
-// create a task that ensures the `css` task is complete before
-// reloading browsers
-gulp.task('css-watch', ['css'], function(done) {
-    browserSync.reload();
-    done();
-});
-
-// process JS files and return the stream.
-gulp.task('js', function() {
-    return gulp.src('js/*.js')
-        .pipe(gulp.dest('dist/js'));
-});
-
-// create a task that ensures the `js` task is complete before
-// reloading browsers
-gulp.task('js-watch', ['js'], function(done) {
-    browserSync.reload();
-    done();
-});
-
-// Static server
-gulp.task('serve', ['js', 'css'], function() {
+gulp.task('browser-sync', ['nodemon'], function() {
     browserSync.init({
-        server: {
-            baseDir: "./"
-        }
-    });
+		proxy: 'http://localhost:3000',
+        browser: 'google chrome',
+        port: 4000
+	});
+});
 
-    gulp.watch("index.html").on('change', browserSync.reload);
-    gulp.watch("css/*.css", ['css-watch']);
-    gulp.watch("js/*.js", ['js-watch']);
+gulp.task('js', function() {
+    return gulp.src('js/*.js');
+});
+
+gulp.task('css', function () {
+    return gulp.src('css/*.css').pipe(browserSync.reload({ stream: true }));
+});
+
+gulp.task('bs-reload', function () {
+    browserSync.reload();
+});
+
+gulp.task('nodemon', function (cb) {
+
+	var started = false;
+
+	return nodemon({
+		script: 'server.js',
+        watch: ['server.js']
+	}).on('start', function onStart() {
+		if (!started) {
+			cb();
+			started = true;
+		}
+	}).on('restart', function onRestart() {
+        setTimeout(function reload() {
+            browserSync.reload({
+                stream: false
+            });
+        }, BROWSER_SYNC_RELOAD_DELAY);
+    });
 });

@@ -7,7 +7,7 @@ var nodemailer = require("nodemailer");
 var mg = require("nodemailer-mailgun-transport");
 var bodyParser = require("body-parser");
 var nconf = require("nconf");
-var auth = require("./config.json");
+var config = require("./config/config");
 
 var app = express();
 var projectRoot = __dirname;
@@ -39,7 +39,7 @@ app.post("/", function(req, res) {
     console.log('\nCONTACT FORM DATA: ' + name + ' ' + email + ' ' + subject + ' ' + message + '\n');
 
     // create transporter object capable of sending email using the default SMTP transport
-    var transporter = nodemailer.createTransport(mg(auth));
+    var transporter = nodemailer.createTransport(mg(config));
 
     if (name === "" || email === "" || subject === "" || message === "") {
         isError = true;
@@ -65,9 +65,5 @@ app.post("/", function(req, res) {
     });
 });
 
-// start it up
-var port = process.env.PORT || 3000;
-//var port = process.env.PORT || 80;
-
-app.listen(port);
-console.log('Dev server up on port ' + port);
+app.listen(config.port);
+console.log('Express server up and running on port ' + config.port);
