@@ -179,7 +179,7 @@
             };
 
             if (options.autoplay) {
-                options.autoplayTimeout = dataOptions.autoplayTimeout || 2000;
+                options.autoplayTimeout = dataOptions.autoplayTimeout || 4000;
                 options.autoplayHoverPause = true;
             }
 

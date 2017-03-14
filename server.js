@@ -41,9 +41,9 @@ app.post("/", function(req, res) {
     // create transporter object capable of sending email using the default SMTP transport
     var transporter = nodemailer.createTransport(mg(config));
 
-    if (name === "" || email === "" || subject === "" || message === "") {
-        isError = true;
-    }
+    // if (name === "" || email === "" || subject === "" || message === "") {
+    //     isError = true;
+    // }
 
     // setup e-mail data with unicode symbols
     var mailOptions = {
