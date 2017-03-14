@@ -1,5 +1,5 @@
 {
-    "name": "personal-cv",
+    "name": "ryantoler",
     "description": "Personal website to display skills and experience.",
     "version": "1.0.0",
     "private": true,
@@ -18,7 +18,8 @@
         "morgan": "^1.8.1",
         "nconf": "^0.8.4",
         "nodemailer": "^3.1.4",
-        "nodemailer-mailgun-transport": "^1.2.4"
+        "nodemailer-mailgun-transport": "^1.2.4",
+        "request": "^2.81.0"
     },
     "devDependencies": {
         "browser-sync": "^2.18.8",
