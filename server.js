@@ -38,7 +38,7 @@ app.post("/", function(req, res) {
     console.log('\nCONTACT FORM DATA: ' + name + ' ' + email + ' ' + subject + ' ' + message + '\n');
 
     // create transporter object capable of sending email using the default SMTP transport
-    var transporter = nodemailer.createTransport(mg(auth));
+    var transporter = nodemailer.createTransport(mg(config));
 
     // setup e-mail data with unicode symbols
     var mailOptions = {
