@@ -6994,6 +6994,17 @@ button.close {
     content: "\e063"
 }
 
+.block {
+  display: inline-block;
+  vertical-align:top;
+  text-align: center;
+  width: 20%;
+  height: 150px;
+  border: 1px solid #999;
+  padding: 1%;
+  margin:1%;
+}
+
 .flex-container a:focus, .flex-container a:hover, .flex-slider a:focus, .flex-slider a:hover {
     outline: 0
 }

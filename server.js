@@ -34,24 +34,18 @@ app.post("/", function(req, res) {
     var email = req.body.email;
     var subject = req.body.subject;
     var message = req.body.message;
-    var isError = false;
 
     console.log('\nCONTACT FORM DATA: ' + name + ' ' + email + ' ' + subject + ' ' + message + '\n');
 
     // create transporter object capable of sending email using the default SMTP transport
-    var transporter = nodemailer.createTransport(mg(config));
-
-    // if (name === "" || email === "" || subject === "" || message === "") {
-    //     isError = true;
-    // }
+    var transporter = nodemailer.createTransport(mg(auth));
 
     // setup e-mail data with unicode symbols
     var mailOptions = {
         from: name + ' <' + email + '>', // sender address
         to: 'rdt712@gmail.com', // list of receivers
         subject: subject, // Subject line
-        text: message,
-        err: isError
+        text: message
     };
     // send mail with defined transport object
     transporter.sendMail(mailOptions, function(error, info) {
